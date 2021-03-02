@@ -25,14 +25,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/registration/**")
+                .antMatchers("/api/v*/registration/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and().formLogin();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
        auth.authenticationProvider(daoAuthenticationProvider());
     }
 

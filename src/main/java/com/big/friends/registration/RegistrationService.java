@@ -3,7 +3,7 @@ package com.big.friends.registration;
 import com.big.friends.app.AppUserRole;
 import com.big.friends.app.UserEntity;
 import com.big.friends.app.UserService;
-import com.big.friends.email.EmailSender;
+import com.big.friends.email.EmailService;
 import com.big.friends.registration.token.ConfirmationToken;
 import com.big.friends.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class RegistrationService {
 
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailValidator emailValidator;
-    private final EmailSender emailSender;
+    private final EmailService emailSender;
     private final UserService userService;
 
     public String register(RegistrationRequest request) {
@@ -60,7 +60,7 @@ public class RegistrationService {
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
-        if (expiredAt.isAfter(LocalDateTime.now())){
+        if (expiredAt.isBefore(LocalDateTime.now())){
             throw new IllegalStateException(TOKEN_EXPIRED);
         }
 
